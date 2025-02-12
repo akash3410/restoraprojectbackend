@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AddMenuForm, AddCategoryForm
 from .models import Food, Category
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def food_view(request):
+    if not request.user.is_superuser:
+        return redirect('profile')
+    
     foods = Food.objects.all()
     categories = Category.objects.all()
 
@@ -13,7 +18,11 @@ def food_view(request):
     }
     return render(request, 'menuapp/foods.html', context)
 
+@login_required
 def add_food(request):
+    if not request.user.is_superuser:
+        return redirect('profile')
+    
     if request.method == 'POST':
         form = AddMenuForm(request.POST, request.FILES)
         if form.is_valid():
@@ -23,7 +32,11 @@ def add_food(request):
         form = AddMenuForm()
     return render(request, 'menuapp/addmenu.html', {'form': form})
 
+@login_required
 def edit_food(request, pk):
+    if not request.user.is_superuser:
+        return redirect('profile')
+    
     food = get_object_or_404(Food, pk=pk)
     if request.method == 'POST':
         form = AddMenuForm(request.POST, request.FILES, instance=food)
@@ -34,12 +47,20 @@ def edit_food(request, pk):
         form = AddMenuForm(instance=food)
     return render(request, 'menuapp/addmenu.html', {'form': form})
 
+@login_required
 def delete_food(request, pk):
+    if not request.user.is_superuser:
+        return redirect('profile')
+    
     food = get_object_or_404(Food, pk=pk)
     food.delete()
     return redirect('foods')
 
+@login_required
 def add_categories(request):
+    if not request.user.is_superuser:
+        return redirect('profile')
+    
     if request.method == 'POST':
         form = AddCategoryForm(request.POST)
         if form.is_valid():
@@ -49,7 +70,11 @@ def add_categories(request):
         form = AddCategoryForm()
     return render(request, 'menuapp/addcategory.html', {'form': form})
 
+@login_required
 def edit_categories(request, pk):
+    if not request.user.is_superuser:
+        return redirect('profile')
+    
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
         form = AddCategoryForm(request.POST, instance=category)
@@ -60,7 +85,11 @@ def edit_categories(request, pk):
         form = AddCategoryForm(instance=category)
     return render(request, 'menuapp/addcategory.html', {'form': form})
 
+@login_required
 def delete_categories(request, pk):
+    if not request.user.is_superuser:
+        return redirect('profile')
+    
     category = get_object_or_404(Category, pk=pk)
     category.delete()
     return redirect('foods')

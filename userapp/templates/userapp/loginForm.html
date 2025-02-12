@@ -1,0 +1,29 @@
+{% extends 'menuapp/layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bg-secondary-subtle p-4 border rounded shadow-sm w-50 mx-auto p-auto" style="margin-top: 15%;">
+    <h3 class="mb-3 text-secondary">Login</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{form.as_p}}
+    
+        <!-- <div class="mb-3">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+    
+        <div class="mb-3">
+            {{ form.is_active.label_tag }}
+            {{ form.is_active }}
+        </div> -->
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'register' %}" class="text-decoration-none text-success">Don't have account?</a>
+            <button type="submit" class="btn btn-outline-primary">Login</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
