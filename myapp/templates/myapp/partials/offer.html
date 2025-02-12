@@ -1,0 +1,28 @@
+<div class="offer_container">
+  {% load static %}
+    <div class="container ">
+      <h1 class="text-center fw-bolder">Our Offers</h1>
+      <div class="row">
+        {% for offer in offers %}
+          <div class="col-md-6  ">
+            <div class="box shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+              <div class="img-box">
+                <img src="{{ offer.foods.last.image.url }}" alt="" width="100%" height="100%" class="mt-2">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  {{offer.title}}
+                </h5>
+                <h6>
+                  <span>{{offer.offer_persentage}}%</span> Off
+                </h6>
+                <a href="">
+                  Order Now <i class="fa-solid fa-cart-shopping" style="color: #fcfcfc;"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        {%endfor%}
+      </div>
+    </div>
+</div>

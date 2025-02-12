@@ -1,0 +1,49 @@
+<h2 class="mt-5">All Food Category</h2>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
+    <div class="container-fluid">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="search categories" aria-label="Search">
+        </form>
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="btn btn-primary" href="{% url 'addcategories' %}">Add a new category</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">no.</th>
+            <th scope="col" class="text-align-center">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+            <tr class="">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{category.name}}</td>
+                <td>
+                    {% if category.is_active == True %}
+                        <i class="fa-solid fa-check text-success fs-4 ms-3"></i>
+                    {% else %}
+                        <i class="fa-solid fa-xmark text-danger fs-4 ms-3"></i>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{%url 'editcategories' category.pk %}" class="text-black fs-3 me-3">
+                        <i class="fa-solid fa-pen-to-square" style="font-size: large;"></i>
+                    </a>
+                    |
+                    <a href="{%url 'deletecategories' category.pk %}" class="text-danger fs-5 ms-3">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
