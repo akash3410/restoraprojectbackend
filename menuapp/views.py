@@ -144,4 +144,3 @@ def delete_offer(request, pk):
     offer = get_object_or_404(Offer, pk=pk)
     offer.delete()
     return redirect('offers')
-
