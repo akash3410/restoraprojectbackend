@@ -79,4 +79,3 @@ class OfferForm(forms.ModelForm):
     class Meta:
         model = Offer
         fields = ['title', 'description', 'foods', 'offer_persentage', 'last_date']
-        fields = ['title', 'description', 'price', 'categories', 'avaiable', 'image']
