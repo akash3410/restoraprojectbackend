@@ -29,6 +29,7 @@ class Offer(models.Model):
     description = models.CharField(max_length=150, null=True, blank=True)
     offer_persentage = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    start_date = models.DateTimeField(null=True, blank=True)
     last_date = models.DateTimeField(null=True, blank=True)
 
     def total_price(self):
@@ -42,8 +43,8 @@ class Offer(models.Model):
         return (self.total_price() - self.less_price())
     
     def duration(self):
-        if self.created_at and self.last_date:
-            return self.last_date - self.created_at
+        if self.start_date and self.last_date:
+            return self.last_date - self.start_date
         return timedelta(0)  # Default if dates are missing
 
     def formatted_duration(self):

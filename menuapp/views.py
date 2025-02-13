@@ -116,7 +116,7 @@ def create_offer_form(request):
             offer = form.save(commit=False)
             offer.save()
             form.save_m2m()
-            return redirect('foods')
+            return redirect('offers')
     form = OfferForm()
     return render(request, "menuapp/offerform.html", {'form': form})
 

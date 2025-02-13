@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="bg-secondary-subtle p-4 border rounded shadow-sm">
-    <h2>Create Offer</h2>
+    <h2 class="mt-2">Create Offer</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
@@ -25,6 +25,11 @@
             {{ form.offer_persentage }}
         </div>
     
+        <div class="mb-3">
+            {{ form.start_date.label_tag }}
+            {{ form.start_date }}
+        </div>
+
         <div class="mb-3">
             {{ form.last_date.label_tag }}
             {{ form.last_date }}

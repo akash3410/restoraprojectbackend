@@ -72,10 +72,15 @@ class OfferForm(forms.ModelForm):
         label="Offer Amount (%)",
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Example: 20'}),
     )
+    start_date = forms.DateTimeField(
+        label="Start Date",
+        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'mm:dd:yyyy', 'type': 'datetime-local'}),
+    )
     last_date = forms.DateTimeField(
         label="End Date",
         widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'mm:dd:yyyy', 'type': 'datetime-local'}),
     )
+
     class Meta:
         model = Offer
-        fields = ['title', 'description', 'foods', 'offer_persentage', 'last_date']
+        fields = ['title', 'description', 'foods', 'offer_persentage', 'start_date', 'last_date']

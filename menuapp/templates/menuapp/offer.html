@@ -28,7 +28,7 @@
                 <th scope="col">no.</th>
                 <th scope="col" class="text-align-center">Title</th>
                 <th scope="col">Offers</th>
-                <th scope="col">Created At</th>
+                <th scope="col">Starting</th>
                 <th scope="col">Validity</th>
                 <th scope="col">Actions</th>
 
@@ -90,7 +90,7 @@
                         </div>
                     </td>
                     <td>{{offer.offer_persentage}} % off</td>
-                    <td>{{offer.created_at}}</td>
+                    <td>{{offer.start_date}}</td>
                     <td>{{offer.last_date}}</td>
                     <td>
                         <a href="{% url 'editoffer' offer.pk %}" class="text-black fs-3 me-3">
