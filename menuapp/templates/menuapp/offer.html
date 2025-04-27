@@ -1,0 +1,109 @@
+{% extends 'dashboardapp/index.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-3">All Offers</h2>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
+        <div class="container-fluid">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="search offers by title" aria-label="Search">
+            </form>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="sort by" aria-label="Search">
+            </form>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="btn btn-primary me-2" href="{% url 'createoffer' %}">Create Offers</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">no.</th>
+                <th scope="col" class="text-align-center">Title</th>
+                <th scope="col">Offers</th>
+                <th scope="col">Starting</th>
+                <th scope="col">Validity</th>
+                <th scope="col">Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for offer in offers %}
+                <tr class="">
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#foodModal{{offer.id}}" data-bs-whatever="@mdo">{{offer.title}}</button>
+
+                        <div class="modal fade" id="foodModal{{ offer.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Offer Details</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card mx-auto w-100" style="width: 18rem;">
+                                            <div class="card-body text-center">
+                                              <h5 class="card-title">{{offer.title}}</h5>
+                                              {% if offer.description %}
+                                                <p class="card-text">{{offer.description}}</p>
+                                              {% else %}
+                                                <p></p>
+                                              {% endif %}
+                                              <p class="text-decoration-line-through text-primary-emphasis"><span class="fw-bold">Total Price: </span>{{offer.total_price}}</p>
+                                              <p class="text-primary-emphasis"><span class="fw-bold">Less:</span> {{offer.less_price}} <span class="text-danger">({{offer.offer_persentage}}%)</span> </p>
+                                              <p class="text-success"><span class="fw-bold">Offer Price: </span>{{offer.final_price}}</p>
+                                              <p><span class="fw-bold">Duration: </span>{{offer.formatted_duration}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                {% for food in offer.foods.all %}
+                                                    <div class="col-md-6">
+                                                        <div class="card">
+                                                            <img src="{{ food.image.url }}" class="card-img-top" alt="{{ food.title }}">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">{{food.title}}</h5>
+                                                                <h6 class="card-subtitle mb-2 text-body-secondary">{{food.categories.name}}</h6>
+                                                                <p class="card-text"><span class="fw-bolder">Price: </span> {{food.price}} </p>
+                                                                {% if food.avaiable == True %}
+                                                                    <p class="card-text fw-bolder">Status: <span class="text-success"> Available </span> </p>
+                                                                {% else %}
+                                                                <p class="card-text fw-bolder">Status: <span class="text-danger"> Out of stock </span> </p>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{offer.offer_persentage}} % off</td>
+                    <td>{{offer.start_date}}</td>
+                    <td>{{offer.last_date}}</td>
+                    <td>
+                        <a href="{% url 'editoffer' offer.pk %}" class="text-black fs-3 me-3">
+                            <i class="fa-solid fa-pen-to-square" style="font-size: large;"></i>
+                        </a>
+                        |
+                        <a href="{% url 'deleteoffer' offer.pk %}" class="text-danger fs-5 ms-3">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+<div class="offer_container">
+  {% load static %}
+    <div class="container ">
+      <h1 class="text-center fw-bolder">Our Offers</h1>
+      <div class="row">
+        {% for offer in offers %}
+          <div class="col-md-4  ">
+            <div class="box shadow-lg p-3 mb-5 bg-dark rounded">
+              <div class="img-box">
+                <img src="{{ offer.foods.last.image.url }}" alt="" width="100%" height="100%" class="mt-2">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn" data-bs-toggle="modal"  data-bs-target="#offerModal{{offer.id}}" style="color: white; font-size: 23px; font-weight: bold;" data-bs-whatever="@mdo">
+                    {{offer.title}}
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="offerModal{{ offer.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content bg-body-tertiary">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-secondary" id="exampleModalLabel">Offer Details</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card mx-auto w-100 mb-3 bg-body-tertiary" style="width: 18rem;">
+                                <div class="card-body text-center">
+                                  <h5 class="card-title">{{offer.title}}</h5>
+                                  {% if offer.description %}
+                                    <p class="card-text">{{offer.description}}</p>
+                                  {% else %}
+                                    <p></p>
+                                  {% endif %}
+                                  <p class="text-decoration-line-through text-primary-emphasis"><span class="fw-bold">Total Price: </span>{{offer.total_price}}</p>
+                                  <p class="text-primary-emphasis"><span class="fw-bold">Less:</span> {{offer.less_price}} <span class="text-danger">({{offer.offer_persentage}}%)</span> </p>
+                                  <p class="text-success"><span class="fw-bold">Offer Price: </span>{{offer.final_price}}</p>
+                                  <p><span class="fw-bold">Starting: </span>{{offer.start_date}}</p>
+                                  <p class="text-warning"><span class="fw-bold">Duration: </span>{{offer.formatted_duration}}</p>
+                                </div>
+                            </div>
+                            <div class="container-fluid bg-body-tertiary">
+                                <div class="row">
+                                    {% for food in offer.foods.all %}
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <img src="{{ food.image.url }}" class="card-img-top mt-3" alt="{{ food.title }}">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{food.title}}</h5>
+                                                    <h6 class="card-subtitle mb-2 text-body-secondary">{{food.categories.name}}</h6>
+                                                    <p class="card-text"><span class="fw-bolder">Price: </span> {{food.price}} </p>
+                                                    {% if food.avaiable == True %}
+                                                        <p class="card-text fw-bolder">Status: <span class="text-success"> Available </span> </p>
+                                                    {% else %}
+                                                    <p class="card-text fw-bolder">Status: <span class="text-danger"> Out of stock </span> </p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </h5>
+
+                <h6>
+                  <span>{{offer.offer_persentage}}%</span> Off
+                </h6>
+                <a href="">
+                  Order <i class="fa-solid fa-cart-shopping" style="color: #fcfcfc;"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        {%endfor%}
+    </div>
+</div>
